@@ -10,6 +10,16 @@ export function RideStory({ moments, stops }: { moments: Moment[]; stops: MapSto
   const chapters = useMemo(() => rideChapters(moments), [moments]);
   const numbers = useMemo(() => stopNumbers(moments), [moments]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [mapOpen, setMapOpen] = useState(true);
+  const [wide, setWide] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)");
+    const update = () => setWide(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     const elements = moments.flatMap((moment) => {
@@ -23,13 +33,13 @@ export function RideStory({ moments, stops }: { moments: Moment[]; stops: MapSto
           setActiveId(visible.target.id);
         }
       },
-      { rootMargin: "-40% 0px -55% 0px" },
+      { rootMargin: readingBand(wide, mapOpen) },
     );
     for (const element of elements) {
       observer.observe(element);
     }
     return () => observer.disconnect();
-  }, [moments]);
+  }, [moments, wide, mapOpen]);
 
   const scrollToMoment = useCallback((momentId: string) => {
     document.getElementById(momentId)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -37,31 +47,65 @@ export function RideStory({ moments, stops }: { moments: Moment[]; stops: MapSto
 
   const active = moments.find((moment) => moment.id === activeId);
   const activeHasPins = stops.some((stop) => stop.momentId === activeId);
+  const scrollOffset =
+    stops.length === 0
+      ? "scroll-mt-6"
+      : mapOpen
+        ? "scroll-mt-[calc(38svh+1.5rem)] lg:scroll-mt-6"
+        : "scroll-mt-16 lg:scroll-mt-6";
 
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:gap-12">
       {stops.length > 0 ? (
-        <aside className="order-first lg:order-last">
-          <div className="relative h-72 overflow-hidden border border-line lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)]">
+        <aside className="sticky top-0 z-20 order-first -mx-5 self-start lg:static lg:order-last lg:mx-0 lg:self-stretch">
+          <div
+            className={`relative overflow-hidden border-b border-line shadow-[0_10px_24px_rgb(28_23_18_/_0.18)] transition-[height] duration-300 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:border lg:shadow-none ${
+              mapOpen ? "h-[38svh]" : "h-12"
+            }`}
+          >
             <StoryMap
               stops={stops}
               numbers={numbers}
               activeMomentId={activeId}
               onSelect={scrollToMoment}
             />
-            <div className="pointer-events-none absolute top-3 left-3 z-[1000] max-w-[calc(100%-1.5rem)] bg-pine/90 px-3 py-2 text-paper shadow-lg">
-              <p className="text-[0.65rem] uppercase tracking-[0.18em] text-paper/70">
-                {active ? active.day.split(" · ")[0] : "The whole ride"}
-              </p>
-              <p className="font-display text-lg leading-tight">
-                {active
-                  ? `${String(numbers.get(active.id) ?? "").padStart(2, "0")} · ${active.title}`
-                  : "Scroll to follow along"}
-              </p>
-              {active && !activeHasPins ? (
-                <p className="mt-0.5 text-xs text-paper/70">No GPS on these photos</p>
-              ) : null}
+            <div
+              className={`pointer-events-none absolute z-[1000] bg-pine/90 text-paper lg:inset-auto lg:top-3 lg:left-3 lg:block lg:max-w-[calc(100%-1.5rem)] lg:px-3 lg:py-2 lg:shadow-lg ${
+                mapOpen
+                  ? "top-3 left-3 max-w-[calc(100%-7.5rem)] px-3 py-2 shadow-lg"
+                  : "inset-0 flex items-center pr-28 pl-5"
+              }`}
+            >
+              <div className="min-w-0">
+                <p
+                  className={`text-[0.65rem] uppercase tracking-[0.18em] text-paper/70 lg:block ${
+                    mapOpen ? "" : "hidden"
+                  }`}
+                >
+                  {active ? active.day.split(" · ")[0] : "The whole ride"}
+                </p>
+                <p className="truncate font-display text-base leading-tight sm:text-lg">
+                  {active
+                    ? `${String(numbers.get(active.id) ?? "").padStart(2, "0")} · ${active.title}`
+                    : "Scroll to follow along"}
+                </p>
+                {active && !activeHasPins ? (
+                  <p className={`mt-0.5 text-xs text-paper/70 lg:block ${mapOpen ? "" : "hidden"}`}>
+                    No GPS on these photos
+                  </p>
+                ) : null}
+              </div>
             </div>
+            <button
+              type="button"
+              aria-expanded={mapOpen}
+              onClick={() => setMapOpen((open) => !open)}
+              className={`absolute right-3 z-[1001] bg-card px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-pine shadow-md lg:hidden ${
+                mapOpen ? "top-3" : "top-1/2 -translate-y-1/2"
+              }`}
+            >
+              {mapOpen ? "Hide map" : "Show map"}
+            </button>
           </div>
         </aside>
       ) : null}
@@ -83,7 +127,7 @@ export function RideStory({ moments, stops }: { moments: Moment[]; stops: MapSto
               <ol className="mt-14 space-y-20">
                 {chapter.moments.map((moment) =>
                   moment.kind === "note" ? (
-                    <li key={moment.id} id={moment.id} className="scroll-mt-6">
+                    <li key={moment.id} id={moment.id} className={scrollOffset}>
                       <blockquote className="border-l-4 border-blaze bg-card px-6 py-7 sm:px-8">
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-moss">
                           Bike notes
@@ -93,7 +137,7 @@ export function RideStory({ moments, stops }: { moments: Moment[]; stops: MapSto
                       </blockquote>
                     </li>
                   ) : (
-                    <li key={moment.id} id={moment.id} className="scroll-mt-6">
+                    <li key={moment.id} id={moment.id} className={scrollOffset}>
                       <article>
                         <div className="flex items-baseline gap-4">
                           <span className="font-display text-3xl text-blaze tabular-nums">
@@ -120,4 +164,11 @@ export function RideStory({ moments, stops }: { moments: Moment[]; stops: MapSto
       </div>
     </div>
   );
+}
+
+function readingBand(wide: boolean, mapOpen: boolean): string {
+  if (wide) {
+    return "-40% 0px -55% 0px";
+  }
+  return mapOpen ? "-55% 0px -40% 0px" : "-30% 0px -65% 0px";
 }

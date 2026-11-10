@@ -16,11 +16,17 @@ type PlacedPin = {
   marker: import("leaflet").Marker;
 };
 
+type MapTarget = {
+  bounds: import("leaflet").LatLngBounds;
+  maxZoom: number;
+};
+
 export function StoryMap({ stops, numbers, activeMomentId, onSelect }: StoryMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<import("leaflet").Map | null>(null);
   const leafletRef = useRef<typeof import("leaflet") | null>(null);
   const pinsRef = useRef<PlacedPin[]>([]);
+  const targetRef = useRef<MapTarget | null>(null);
   const onSelectRef = useRef(onSelect);
   const [ready, setReady] = useState(false);
 
@@ -35,6 +41,7 @@ export function StoryMap({ stops, numbers, activeMomentId, onSelect }: StoryMapP
     }
 
     let active = true;
+    let resizeObserver: ResizeObserver | undefined;
 
     const mount = async () => {
       const leaflet = await import("leaflet");
@@ -44,9 +51,17 @@ export function StoryMap({ stops, numbers, activeMomentId, onSelect }: StoryMapP
 
       const map = leaflet.map(container, {
         scrollWheelZoom: false,
+        dragging: !leaflet.Browser.mobile,
         attributionControl: true,
         zoomControl: false,
       });
+      resizeObserver = new ResizeObserver(() => {
+        map.invalidateSize();
+        if (targetRef.current) {
+          fitTarget(map, targetRef.current, false);
+        }
+      });
+      resizeObserver.observe(container);
       leaflet.control.zoom({ position: "bottomright" }).addTo(map);
       leaflet
         .tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
@@ -83,6 +98,7 @@ export function StoryMap({ stops, numbers, activeMomentId, onSelect }: StoryMapP
 
     return () => {
       active = false;
+      resizeObserver?.disconnect();
       mapRef.current?.remove();
       mapRef.current = null;
       pinsRef.current = [];
@@ -105,12 +121,12 @@ export function StoryMap({ stops, numbers, activeMomentId, onSelect }: StoryMapP
     }
 
     const targets = activePins.length > 0 ? activePins.map((pin) => pin.stop) : stops;
-    const bounds = leaflet.latLngBounds(targets.map((stop) => [stop.lat, stop.lng]));
-    map.flyToBounds(bounds, {
-      padding: [60, 60],
+    const target = {
+      bounds: leaflet.latLngBounds(targets.map((stop) => [stop.lat, stop.lng])),
       maxZoom: activePins.length > 0 ? 12 : 11,
-      duration: 0.9,
-    });
+    };
+    targetRef.current = target;
+    fitTarget(map, target, true);
   }, [activeMomentId, ready, stops, numbers]);
 
   return (
@@ -121,6 +137,20 @@ export function StoryMap({ stops, numbers, activeMomentId, onSelect }: StoryMapP
       aria-label="Map of the ride, following the stop you are reading"
     />
   );
+}
+
+function fitTarget(map: import("leaflet").Map, target: MapTarget, animate: boolean) {
+  const size = map.getSize();
+  if (size.y < 120) {
+    return;
+  }
+  const padding = Math.round(Math.min(60, size.x / 6, size.y / 6));
+  const options = { padding: [padding, padding] as [number, number], maxZoom: target.maxZoom };
+  if (animate) {
+    map.flyToBounds(target.bounds, { ...options, duration: 0.9 });
+  } else {
+    map.fitBounds(target.bounds, { ...options, animate: false });
+  }
 }
 
 function storyPin(
