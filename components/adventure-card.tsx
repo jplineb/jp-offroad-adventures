@@ -36,7 +36,7 @@ export function AdventureCard({ adventure }: { adventure: Adventure }) {
               {adventure.title}
             </h2>
             <p className="max-w-prose text-lg leading-relaxed text-ink-soft">
-              {adventure.summary}
+              {adventure.summary.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")}
             </p>
             <dl className="grid gap-3 sm:grid-cols-2">
               {adventure.stats.map((stat) => (

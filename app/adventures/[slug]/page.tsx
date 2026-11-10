@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { LinkedText } from "@/components/linked-text";
 import { RideMap } from "@/components/ride-map";
 import { Timeline } from "@/components/timeline";
 import { getAdventure, listAdventures } from "@/lib/adventures";
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: AdventurePageProps): Promise<
   }
   return {
     title: adventure.title,
-    description: adventure.summary,
+    description: adventure.summary.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1"),
   };
 }
 
@@ -65,7 +66,10 @@ export default async function AdventurePage({ params }: AdventurePageProps) {
           </h1>
         </div>
       </div>
-      <p className="mt-6 max-w-prose text-lg leading-relaxed text-ink-soft">{adventure.summary}</p>
+      <LinkedText
+        text={adventure.summary}
+        className="mt-6 max-w-prose text-lg leading-relaxed text-ink-soft"
+      />
       <dl className="mt-6 flex flex-wrap gap-3">
         {adventure.stats.map((stat) => (
           <div key={stat.label} className="border border-line bg-card px-3 py-2">

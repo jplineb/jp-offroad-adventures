@@ -1,9 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { MediaGallery } from "@/components/media-gallery";
 import type { Moment } from "@/lib/types";
+
+type ClickedHeader = {
+  button: HTMLButtonElement;
+  top: number;
+};
+
+function suspendScrollAnchoring() {
+  document.documentElement.style.overflowAnchor = "none";
+  document.body.style.overflowAnchor = "none";
+}
+
+function resumeScrollAnchoring() {
+  document.documentElement.style.overflowAnchor = "";
+  document.body.style.overflowAnchor = "";
+}
+
+function keepClickedHeaderInPlace(clicked: ClickedHeader) {
+  if (!clicked.button.isConnected) {
+    return;
+  }
+  const delta = clicked.button.getBoundingClientRect().top - clicked.top;
+  if (Math.abs(delta) < 1) {
+    return;
+  }
+  const root = document.documentElement;
+  const previous = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  window.scrollBy(0, delta);
+  root.style.scrollBehavior = previous;
+}
 
 type Chapter = {
   day: string;
@@ -16,6 +46,17 @@ export function Timeline({ moments }: { moments: Moment[] }) {
   const numbers = stopNumbers(moments);
   const firstStop = moments.find((moment) => moment.kind === "stop");
   const [openId, setOpenId] = useState<string | null>(firstStop?.id ?? null);
+  const clickedHeader = useRef<ClickedHeader | null>(null);
+
+  useLayoutEffect(() => {
+    const clicked = clickedHeader.current;
+    if (!clicked) {
+      return;
+    }
+    clickedHeader.current = null;
+    keepClickedHeaderInPlace(clicked);
+    resumeScrollAnchoring();
+  }, [openId]);
 
   useEffect(() => {
     const openFromHash = () => {
@@ -70,7 +111,14 @@ export function Timeline({ moments }: { moments: Moment[] }) {
                   <button
                     type="button"
                     aria-expanded={open}
-                    onClick={() => setOpenId(open ? null : moment.id)}
+                    onClick={(event) => {
+                      clickedHeader.current = {
+                        button: event.currentTarget,
+                        top: event.currentTarget.getBoundingClientRect().top,
+                      };
+                      suspendScrollAnchoring();
+                      setOpenId(open ? null : moment.id);
+                    }}
                     className="flex w-full items-center gap-4 py-4 text-left"
                   >
                     {sequence ? (
@@ -108,7 +156,7 @@ export function Timeline({ moments }: { moments: Moment[] }) {
                       <MomentText text={moment.text} className="text-base sm:text-lg" />
                       {moment.media.length > 0 ? (
                         <div className="mt-5">
-                          <MediaGallery items={moment.media} layout="stage" priority={sequence === 1} />
+                          <MediaGallery items={moment.media} priority={sequence === 1} />
                         </div>
                       ) : null}
                     </div>

@@ -8,11 +8,9 @@ import type { GalleryItem } from "@/lib/types";
 export function MediaGallery({
   items,
   priority = false,
-  layout = "stack",
 }: {
   items: GalleryItem[];
   priority?: boolean;
-  layout?: "stack" | "stage";
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const close = useCallback(() => setOpenIndex(null), []);
@@ -23,34 +21,19 @@ export function MediaGallery({
 
   const images = items.filter((item) => item.kind === "image");
   const videos = items.filter((item) => item.kind === "video");
-  const [lead, ...rest] = images;
 
   return (
     <>
       <div className="space-y-4">
-        {lead ? (
-          <PhotoButton
-            item={lead}
-            priority={priority}
-            sizes="(max-width: 1024px) 100vw, 720px"
-            onOpen={() => setOpenIndex(0)}
-          />
-        ) : null}
-        {rest.length > 0 ? (
-          <ul
-            className={
-              layout === "stage"
-                ? "flex gap-2 overflow-x-auto pb-1"
-                : "grid grid-cols-2 gap-2.5 sm:gap-3"
-            }
-          >
-            {rest.map((item, index) => (
-              <li key={item.src} className={layout === "stage" ? "w-36 shrink-0 sm:w-44" : undefined}>
+        {images.length > 0 ? (
+          <ul className={photoGridClass(images.length)}>
+            {images.map((item, index) => (
+              <li key={item.src} className="min-w-0">
                 <PhotoButton
                   item={item}
-                  sizes={layout === "stage" ? "176px" : "(max-width: 1024px) 50vw, 360px"}
-                  frameClassName="aspect-[4/3]"
-                  onOpen={() => setOpenIndex(index + 1)}
+                  priority={priority && index === 0}
+                  sizes={imageSizes(images.length)}
+                  onOpen={() => setOpenIndex(index)}
                 />
               </li>
             ))}
@@ -75,42 +58,61 @@ export function MediaGallery({
   );
 }
 
+function photoGridClass(count: number): string {
+  if (count <= 1) {
+    return "grid grid-cols-1";
+  }
+  if (count === 2) {
+    return "grid grid-cols-2 items-start gap-2.5 sm:gap-3";
+  }
+  return "grid grid-cols-1 items-start gap-2.5 sm:grid-cols-2 sm:gap-3";
+}
+
+function imageSizes(count: number): string {
+  if (count <= 1) {
+    return "(max-width: 1024px) 100vw, 960px";
+  }
+  if (count === 2) {
+    return "(max-width: 1024px) 50vw, 480px";
+  }
+  return "(max-width: 639px) 100vw, (max-width: 1024px) 50vw, 480px";
+}
+
 function PhotoButton({
   item,
   onOpen,
   sizes,
   priority = false,
-  frameClassName,
 }: {
   item: GalleryItem;
   onOpen: () => void;
   sizes: string;
   priority?: boolean;
-  frameClassName?: string;
 }) {
+  const credit = item.alt.includes("Photo by") ? item.alt : "";
+
   return (
-    <button
-      type="button"
-      onClick={onOpen}
-      className="group relative block w-full cursor-zoom-in bg-pine-2 text-left"
-    >
-      <Image
-        src={item.src}
-        alt={item.alt}
-        width={item.width}
-        height={item.height}
-        priority={priority}
-        sizes={sizes}
-        className={
-          frameClassName
-            ? `${frameClassName} w-full object-cover`
-            : "h-auto w-full"
-        }
-      />
-      <span className="pointer-events-none absolute right-2 bottom-2 bg-ink/80 px-2 py-1 text-[0.65rem] uppercase tracking-[0.14em] text-paper opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
-        Enlarge
-      </span>
-    </button>
+    <figure>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="group relative block w-full cursor-zoom-in bg-pine-2 text-left"
+      >
+        <Image
+          src={item.src}
+          alt={item.alt}
+          width={item.width}
+          height={item.height}
+          priority={priority}
+          sizes={sizes}
+          className="h-auto w-full"
+        />
+        <span className="pointer-events-none absolute right-2 bottom-2 bg-ink/80 px-2 py-1 text-[0.65rem] uppercase tracking-[0.14em] text-paper opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+          Enlarge
+        </span>
+      </button>
+      {credit ? <figcaption className="mt-2 text-sm text-ink-soft">{credit}</figcaption> : null}
+    </figure>
   );
 }
 

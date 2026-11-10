@@ -1,8 +1,8 @@
 ---
-title: JP's Lake Tahoe Bike Adventure
+title: Lake Tahoe
 location: Lake Tahoe
 dateLabel: November 6–7, 2026
-summary: Two days around Lake Tahoe on a Tiger 800 XRX and a KTM 500. Snow and ice turned several trails around, the PCT got touched at Echo Lake, and a band of wild horses ran alongside in the Pine Nuts.
+summary: Two days around Lake Tahoe on a Tiger 800 XRX and a KTM 500. Snow and ice turned several trails around, the PCT got touched at Echo Lake, and a band of wild horses ran alongside in the Pine Nuts. Picked up the Tiger 800 XRX from [Rolling Freedom](https://rolltahoe.com) in Stateline. The owner was super communicative, and getting the bike out the door was simple. The Tiger was well maintained, full of gas, and came with nice bags. He pointed out some fun spots to hit. Definitely worth the cost to get to ride around the area.
 cover: 9EE1195C-D5CB-4DCD-8A28-27A48FAC79FA.jpeg
 coverAlt: KTM 500 on White Hill above the lake
 order: 1
@@ -13,7 +13,7 @@ stat: Day 2 | KTM 500 · 150+ miles
 ## Stateline
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Started the adventure here. Picked up the Tiger 800 XRX from [Rolling Freedom](https://rolltahoe.com) in Stateline. The owner was super communicative, and getting the bike out the door was simple. The Tiger was well maintained, full of gas, and came with nice bags. He pointed out some fun spots to hit. I already had a few of my own in mind.
+Started the adventure here.
 
 ![Tiger 800 XRX in Stateline](525A769A-E4A7-4A05-8A83-FA5722571258.jpg)
 
@@ -42,6 +42,9 @@ day: Day 1 · Tiger 800 XRX · 170 miles
 
 Fueled up at the Markleeville gas station and stopped in at the general store. Super nice locals. Really small-town vibes. The town felt cozy.
 
+![Markleeville General Store. Photo by flamenc, via Wikimedia Commons, CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)](markleeville-general-store.jpg)
+![Porch of the Markleeville General Store in 2007. Photo by David Sifry, via Wikimedia Commons, CC BY 2.0 (https://creativecommons.org/licenses/by/2.0)](markleeville-general-store-2007.jpg)
+
 ## Loope Canyon
 day: Day 1 · Tiger 800 XRX · 170 miles
 
@@ -66,10 +69,14 @@ day: Day 1 · Tiger 800 XRX · 170 miles
 
 Rode back on Highway 89 until I met Highway 4. I was hoping to reach Deer Valley Road, 09N83, in the Mokelumne Wilderness and connect back to Highway 88. The road was gated shortly after Silver Creek Campground.
 
+![Highway 4 near Ebbetts Pass, on the way toward Silver Creek. Photo by akampfer, via Wikimedia Commons, CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)](highway-4-ebbetts-pass.jpg)
+
 ## Woodfords
 day: Day 1 · Tiger 800 XRX · 170 miles
 
 Rode back through Markleeville to Woodfords and tried spur trails off Highway 88/89 toward Kirkwood. I do not remember the trail number. There was already snow and ice on the trails right beside the road, so going deeper into the mountains was not going to work. Turned around.
+
+![West Fork of the Carson River just east of Hope Valley, above Woodfords. Photo by Skooiman, public domain, via Wikimedia Commons](woodfords-carson-river.jpg)
 
 ## Echo Lake
 day: Day 1 · Tiger 800 XRX · 170 miles
@@ -87,6 +94,8 @@ day: Day 1 · Tiger 800 XRX · 170 miles
 
 Rode to the trail entrance because the road looked cool on the map. It was closed for the season behind a green gate. Pretty annoyed. Thanks, USFS.
 
+![Fallen Leaf Lake and the south shore from Angora Ridge Road. Photo by Bob Gries, public domain, via Wikimedia Commons](angora-ridge-road.jpg)
+
 ## Fallen Leaf Lake
 day: Day 1 · Tiger 800 XRX · 170 miles
 
@@ -99,6 +108,8 @@ Wanted one more adventure before the hotel. Took FS 1304, Cathedral Road, down t
 day: Day 1 · Tiger 800 XRX · 170 miles
 
 Headed back to Caesars Republic and got in around 4:30. Tired, but not exhausted.
+
+![The Stateline hotel in 2014, when it was still MontBleu. Photo by Noah_Loverbear, via Wikimedia Commons, CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)](stateline-hotel.jpg)
 
 ## The Tiger
 kind: note
