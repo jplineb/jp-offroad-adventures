@@ -53,7 +53,7 @@ export function AdventureCard({ adventure }: { adventure: Adventure }) {
                 {adventure.moments.filter((moment) => moment.kind === "stop").length} stops · {photoCount} photos · {videoCount} videos
               </span>
               <span className="text-blaze group-hover:translate-x-0.5">
-                Open timeline
+                Open story
               </span>
             </p>
           </div>
