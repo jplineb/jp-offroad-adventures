@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { readJpegLocation } from "@/lib/jpeg-gps";
 import { readJpegSize } from "@/lib/jpeg-size";
-import type { Adventure, GalleryItem, Moment, RideStat } from "@/lib/types";
+import type { Adventure, GalleryItem, GeoPoint, Moment, RideStat } from "@/lib/types";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content", "adventures");
 const PUBLIC_ROOT = path.join(process.cwd(), "public", "adventures");
@@ -156,9 +156,11 @@ function parseMoments(body: string, slug: string, filePath: string): Moment[] {
       if (/^kind:/.test(line.trim())) {
         throw new Error(`${filePath}: kind must be stop or note`);
       }
-      const mediaMatch = /^!\[([^\]]*)\]\(([^)]+)\)$/.exec(line.trim());
+      const mediaMatch = /^!\[([^\]]*)\]\(([^)]+)\)(?:\s+@\s+(\S.*))?$/.exec(line.trim());
       if (mediaMatch) {
-        media.push(resolveMedia(slug, mediaMatch[2], mediaMatch[1], filePath));
+        media.push(
+          resolveMedia(slug, mediaMatch[2], mediaMatch[1], filePath, mediaMatch[3]),
+        );
         continue;
       }
       prose.push(line);
@@ -180,6 +182,7 @@ function resolveMedia(
   href: string,
   alt: string,
   filePath: string,
+  placed?: string,
 ): GalleryItem {
   const filename = path.basename(href);
   if (filename !== href.trim() || filename.includes("..")) {
@@ -207,6 +210,27 @@ function resolveMedia(
     alt,
     width: size.width,
     height: size.height,
-    location: readJpegLocation(bytes),
+    location: placedLocation(placed, filePath) ?? readJpegLocation(bytes),
+  };
+}
+
+function placedLocation(value: string | undefined, filePath: string): GeoPoint | null {
+  if (!value) {
+    return null;
+  }
+  const match = /^(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)$/.exec(value.trim());
+  if (!match) {
+    throw new Error(`${filePath}: approximate location must be "lat, lng", got "${value}"`);
+  }
+  const lat = Number(match[1]);
+  const lng = Number(match[2]);
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+    throw new Error(`${filePath}: approximate location is out of range: ${value}`);
+  }
+  return {
+    lat,
+    lng,
+    altitudeMeters: null,
+    takenAt: null,
   };
 }

@@ -41,12 +41,14 @@ export default async function AdventurePage({ params }: AdventurePageProps) {
 
   return (
     <main id="content" className="mx-auto max-w-5xl px-5 py-10 sm:py-14">
-      <Link
-        href="/"
-        className="text-xs font-medium uppercase tracking-[0.18em] text-moss hover:text-blaze"
-      >
-        All rides
-      </Link>
+      <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-[0.18em]">
+        <Link href="/" className="text-moss hover:text-blaze">
+          All rides
+        </Link>
+        <Link href={`/adventures/${adventure.slug}/story`} className="text-moss hover:text-blaze">
+          Story view
+        </Link>
+      </div>
       <div className="mt-6 grid items-end gap-6 sm:grid-cols-[9.5rem_minmax(0,1fr)]">
         <Image
           src={adventure.coverSrc}
@@ -55,7 +57,7 @@ export default async function AdventurePage({ params }: AdventurePageProps) {
           height={adventure.coverHeight}
           priority
           sizes="160px"
-          className="h-40 w-full object-cover object-[center_30%] sm:h-48"
+          className="h-40 w-full object-cover object-[center_72%] sm:h-48"
         />
         <div>
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-blaze">

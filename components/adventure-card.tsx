@@ -24,7 +24,7 @@ export function AdventureCard({ adventure }: { adventure: Adventure }) {
               height={adventure.coverHeight}
               priority
               sizes="(max-width: 768px) 100vw, 420px"
-              className="h-72 w-full object-cover object-[center_30%] md:h-full"
+              className="h-72 w-full object-cover object-[center_72%] md:h-full"
             />
           </div>
           <div className="flex flex-col gap-5 px-6 py-7 sm:px-8">

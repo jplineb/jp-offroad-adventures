@@ -57,6 +57,8 @@ export function photoStops(moments: Moment[]): MapStop[] {
     });
   }
 
+  fillMissingCaptureTimes(stops);
+
   stops.sort((a, b) => {
     if (a.takenAt && b.takenAt && a.takenAt !== b.takenAt) {
       return a.takenAt < b.takenAt ? -1 : 1;
@@ -71,6 +73,79 @@ export function photoStops(moments: Moment[]): MapStop[] {
   });
 
   return stops.map((stop, index) => ({ ...stop, sequence: index + 1 }));
+}
+
+function fillMissingCaptureTimes(stops: MapStop[]) {
+  let index = 0;
+  while (index < stops.length) {
+    if (stops[index]?.takenAt) {
+      index += 1;
+      continue;
+    }
+    const start = index;
+    while (index < stops.length && !stops[index]?.takenAt) {
+      index += 1;
+    }
+    const previous = start > 0 ? stops[start - 1]?.takenAt ?? null : null;
+    const next = index < stops.length ? stops[index]?.takenAt ?? null : null;
+    const count = index - start;
+    for (let offset = 0; offset < count; offset += 1) {
+      const stop = stops[start + offset];
+      if (!stop) {
+        continue;
+      }
+      stop.takenAt = approximateCaptureTime(previous, next, offset, count);
+    }
+  }
+}
+
+function approximateCaptureTime(
+  previous: string | null,
+  next: string | null,
+  offset: number,
+  count: number,
+): string | null {
+  const previousMillis = timestampToMillis(previous);
+  const nextMillis = timestampToMillis(next);
+  if (previousMillis !== null && nextMillis !== null) {
+    const sameDay = previous?.slice(0, 10) === next?.slice(0, 10);
+    if (sameDay && nextMillis > previousMillis) {
+      const step = Math.max(1_000, Math.floor((nextMillis - previousMillis) / (count + 1)));
+      return millisToTimestamp(previousMillis + step * (offset + 1));
+    }
+    return millisToTimestamp(previousMillis + 60_000 * (offset + 1));
+  }
+  if (previousMillis !== null) {
+    return millisToTimestamp(previousMillis + 60_000 * (offset + 1));
+  }
+  if (nextMillis !== null) {
+    return millisToTimestamp(nextMillis - 60_000 * (count - offset));
+  }
+  return null;
+}
+
+function timestampToMillis(value: string | null): number | null {
+  if (!value) {
+    return null;
+  }
+  const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/.exec(value);
+  if (!match) {
+    return null;
+  }
+  return Date.UTC(
+    Number(match[1]),
+    Number(match[2]) - 1,
+    Number(match[3]),
+    Number(match[4]),
+    Number(match[5]),
+    Number(match[6]),
+  );
+}
+
+function millisToTimestamp(value: number): string {
+  const date = new Date(value);
+  const pad = (part: number) => String(part).padStart(2, "0");
+  return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}T${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`;
 }
 
 function distanceMeters(

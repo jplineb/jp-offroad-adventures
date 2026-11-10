@@ -131,7 +131,7 @@ function VideoFrame({ item }: { item: GalleryItem }) {
   );
 }
 
-function Lightbox({
+export function Lightbox({
   images,
   index,
   onChange,

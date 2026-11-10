@@ -35,7 +35,7 @@ function keepClickedHeaderInPlace(clicked: ClickedHeader) {
   root.style.scrollBehavior = previous;
 }
 
-type Chapter = {
+export type Chapter = {
   day: string;
   label: string;
   detail: string;
@@ -173,7 +173,7 @@ export function Timeline({ moments }: { moments: Moment[] }) {
 
 const EXTERNAL_LINK = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
 
-function MomentText({ text, className }: { text: string; className: string }) {
+export function MomentText({ text, className }: { text: string; className: string }) {
   if (text.length === 0) {
     return null;
   }
@@ -226,7 +226,7 @@ function excerpt(text: string, photoCount: number, videoCount: number): string {
   return sentence || counts.join(" · ");
 }
 
-function rideChapters(moments: Moment[]): Chapter[] {
+export function rideChapters(moments: Moment[]): Chapter[] {
   const chapters: Chapter[] = [];
   for (const moment of moments) {
     const current = chapters[chapters.length - 1];
@@ -245,7 +245,7 @@ function rideChapters(moments: Moment[]): Chapter[] {
   return chapters;
 }
 
-function stopNumbers(moments: Moment[]): Map<string, number> {
+export function stopNumbers(moments: Moment[]): Map<string, number> {
   const numbers = new Map<string, number>();
   let count = 0;
   for (const moment of moments) {
