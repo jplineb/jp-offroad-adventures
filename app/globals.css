@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-barlow), "Avenir Next", sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --color-paper: #f3ead9;
+  --color-paper-deep: #e7dcc6;
+  --color-card: #fbf6ec;
+  --color-ink: #1c1712;
+  --color-ink-soft: #5e5348;
+  --color-pine: #1b332b;
+  --color-pine-2: #27493c;
+  --color-moss: #3e6b50;
+  --color-blaze: #c65a2e;
+  --color-line: #d4c4aa;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(ellipse at 0% -10%, rgb(198 90 46 / 0.14), transparent 46%),
+    radial-gradient(ellipse at 100% 0%, rgb(27 51 43 / 0.12), transparent 42%),
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 27px,
+      rgb(28 23 18 / 0.035) 28px
+    );
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-blaze);
+  outline-offset: 3px;
+}
+
+.ride-pin {
+  background: transparent;
+  border: none;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--color-card);
+  border-radius: 0;
+  color: var(--color-ink);
+}
+
+.leaflet-popup-content {
+  margin: 0.55rem 0.6rem;
+}
+
+dialog.lightbox {
+  width: min(1100px, calc(100vw - 1.5rem));
+  max-height: calc(100vh - 1.5rem);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+dialog.lightbox::backdrop {
+  background: rgb(18 14 10 / 0.86);
+}
+
+.moment {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
