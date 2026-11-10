@@ -5,21 +5,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { GalleryItem } from "@/lib/types";
 
-const videoType: Record<string, string> = {
-  mp4: "video/mp4",
-  mov: "video/quicktime",
-  webm: "video/webm",
-  m4v: "video/mp4",
-};
-
 export function MediaGallery({
   items,
   priority = false,
+  layout = "stack",
 }: {
   items: GalleryItem[];
   priority?: boolean;
+  layout?: "stack" | "stage";
 }) {
-  const images = items.filter((item) => item.kind === "image");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const close = useCallback(() => setOpenIndex(null), []);
 
@@ -27,47 +21,45 @@ export function MediaGallery({
     return null;
   }
 
-  let imageCursor = 0;
+  const images = items.filter((item) => item.kind === "image");
+  const videos = items.filter((item) => item.kind === "video");
+  const [lead, ...rest] = images;
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-2.5 sm:gap-3">
-        {items.map((item) => {
-          const span = item.kind === "video" || items.length === 1;
-          if (item.kind === "video") {
-            return (
-              <li key={item.src} className="col-span-2">
-                <VideoFrame item={item} />
-              </li>
-            );
-          }
-
-          const index = imageCursor;
-          imageCursor += 1;
-          return (
-            <li key={item.src} className={span ? "col-span-2" : undefined}>
-              <button
-                type="button"
-                onClick={() => setOpenIndex(index)}
-                className="group relative block w-full cursor-zoom-in bg-pine-2 text-left"
-              >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  width={item.width}
-                  height={item.height}
-                  priority={priority && index === 0}
-                  sizes={span ? "(max-width: 768px) 100vw, 760px" : "(max-width: 768px) 50vw, 380px"}
-                  className="h-auto w-full"
+      <div className="space-y-4">
+        {lead ? (
+          <PhotoButton
+            item={lead}
+            priority={priority}
+            sizes="(max-width: 1024px) 100vw, 720px"
+            onOpen={() => setOpenIndex(0)}
+          />
+        ) : null}
+        {rest.length > 0 ? (
+          <ul
+            className={
+              layout === "stage"
+                ? "flex gap-2 overflow-x-auto pb-1"
+                : "grid grid-cols-2 gap-2.5 sm:gap-3"
+            }
+          >
+            {rest.map((item, index) => (
+              <li key={item.src} className={layout === "stage" ? "w-36 shrink-0 sm:w-44" : undefined}>
+                <PhotoButton
+                  item={item}
+                  sizes={layout === "stage" ? "176px" : "(max-width: 1024px) 50vw, 360px"}
+                  frameClassName="aspect-[4/3]"
+                  onOpen={() => setOpenIndex(index + 1)}
                 />
-                <span className="pointer-events-none absolute right-2 bottom-2 bg-ink/80 px-2 py-1 text-[0.65rem] uppercase tracking-[0.14em] text-paper opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
-                  Enlarge
-                </span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        {videos.map((item) => (
+          <VideoFrame key={item.src} item={item} />
+        ))}
+      </div>
       {openIndex !== null
         ? createPortal(
             <Lightbox
@@ -83,19 +75,56 @@ export function MediaGallery({
   );
 }
 
-function VideoFrame({ item }: { item: GalleryItem }) {
-  const extension = item.src.split(".").pop()?.toLowerCase() ?? "mp4";
+function PhotoButton({
+  item,
+  onOpen,
+  sizes,
+  priority = false,
+  frameClassName,
+}: {
+  item: GalleryItem;
+  onOpen: () => void;
+  sizes: string;
+  priority?: boolean;
+  frameClassName?: string;
+}) {
   return (
-    <figure className="bg-ink">
-      <video controls playsInline preload="metadata" className="mx-auto max-h-[70vh] w-auto max-w-full bg-black">
-        <source src={item.src} type={videoType[extension] ?? "video/mp4"} />
-      </video>
-      <figcaption className="flex items-center justify-between gap-3 px-3 py-2 text-xs text-paper/80">
-        <span>{item.alt}</span>
-        <a href={item.src} className="uppercase tracking-[0.14em] text-paper underline-offset-2 hover:underline">
-          Open file
-        </a>
-      </figcaption>
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group relative block w-full cursor-zoom-in bg-pine-2 text-left"
+    >
+      <Image
+        src={item.src}
+        alt={item.alt}
+        width={item.width}
+        height={item.height}
+        priority={priority}
+        sizes={sizes}
+        className={
+          frameClassName
+            ? `${frameClassName} w-full object-cover`
+            : "h-auto w-full"
+        }
+      />
+      <span className="pointer-events-none absolute right-2 bottom-2 bg-ink/80 px-2 py-1 text-[0.65rem] uppercase tracking-[0.14em] text-paper opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+        Enlarge
+      </span>
+    </button>
+  );
+}
+
+function VideoFrame({ item }: { item: GalleryItem }) {
+  return (
+    <figure>
+      <video
+        controls
+        playsInline
+        preload="metadata"
+        src={item.src}
+        className="aspect-video w-full bg-ink object-contain"
+      />
+      {item.alt ? <figcaption className="mt-2 text-sm text-ink-soft">{item.alt}</figcaption> : null}
     </figure>
   );
 }

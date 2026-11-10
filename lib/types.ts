@@ -34,6 +34,7 @@ export type Moment = {
   day: string;
   title: string;
   text: string;
+  kind: "stop" | "note";
   media: GalleryItem[];
 };
 

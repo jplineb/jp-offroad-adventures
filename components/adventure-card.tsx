@@ -50,7 +50,7 @@ export function AdventureCard({ adventure }: { adventure: Adventure }) {
             </dl>
             <p className="mt-auto flex items-center justify-between gap-3 pt-2 text-sm font-medium uppercase tracking-[0.14em] text-pine">
               <span>
-                {adventure.moments.length} stops · {photoCount} photos · {videoCount} videos
+                {adventure.moments.filter((moment) => moment.kind === "stop").length} stops · {photoCount} photos · {videoCount} videos
               </span>
               <span className="text-blaze group-hover:translate-x-0.5">
                 Open timeline

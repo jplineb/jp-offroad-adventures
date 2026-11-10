@@ -13,14 +13,14 @@ stat: Day 2 | KTM 500 · 150+ miles
 ## Stateline
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Started the adventure here. Picked up the Tiger 800 XRX from Rolling Freedom, the rental shop in Stateline.
+Started the adventure here. Picked up the Tiger 800 XRX from [Rolling Freedom](https://rolltahoe.com) in Stateline. The owner was super communicative, and getting the bike out the door was simple. The Tiger was well maintained, full of gas, and came with nice bags. He pointed out some fun spots to hit. I already had a few of my own in mind.
 
 ![Tiger 800 XRX in Stateline](525A769A-E4A7-4A05-8A83-FA5722571258.jpg)
 
 ## Dagger Pass
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Started the day by going down Dagger Pass and taking in the views
+Left Stateline on Kingsbury Grade and headed down into Carson Valley on purpose. Stopped at the bottom to take in the view and look at the map.
 
 ![View from Dagger Pass](C31D8110-A00E-4089-BCDE-C95E918BF482.jpg)
 ![View from Dagger Pass](9006316E-6329-4008-99D4-8A0A3EA288DE.jpg)
@@ -28,7 +28,7 @@ Started the day by going down Dagger Pass and taking in the views
 ## Curtz Lake
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Took back roads to Alpine County Airport where I stopped to look at Curtz Lake
+Took Airport Road up just to look around. I was curious how much infrastructure an airport out here would have. Almost none, besides the runway. There is a campsite right beside it, which is awesome. The water was not frozen.
 
 ![Curtz Lake](0E4CF40E-6406-4CAE-ADCB-492129173DC7.mp4)
 ![Curtz Lake](A5913D2B-7089-4A9E-B32A-D8AC3D642E30.jpg)
@@ -40,57 +40,57 @@ Took back roads to Alpine County Airport where I stopped to look at Curtz Lake
 ## Markleeville
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Took backroads to Markleeville where I got gas and snacks
+Fueled up at the Markleeville gas station and stopped in at the general store. Super nice locals. Really small-town vibes. The town felt cozy.
 
-## Colorado Hill
+## Loope Canyon
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Road down highway 89 until I reached FS 31190. Road around random roads until I reached snow and turned around. Tried to climb Colorado Hill but too much snow/ice at the top
+Rode down Highway 89 until I reached Loope Canyon Road, around Forest City Flat. Played on a few roads in there and had to bail on them because of the snow. Tried to climb Colorado Hill and stopped with about a mile left. The surface was full of snow. Turning the bike around was a little sketchy, but not too difficult.
 
-![Colorado Hill](7370E18A-3FB8-4273-AFB4-0EF5C5B09D4B.mp4)
-![Colorado Hill](69643A0B-6C40-4C00-8D99-6A4BEA35547F.mov)
-![Colorado Hill](D47F81B0-8795-4221-AD47-E605F26584D3.jpg)
-![Colorado Hill](BBD3C817-EC3A-4317-8655-4EF868166678.jpg)
-![Colorado Hill](15782E9F-0DD6-42AE-A472-21D656D33D0B.jpg)
-![Colorado Hill](1CF2EF44-B2D3-454B-B8EE-3B1980B63E2C.jpg)
+![Loope Canyon](7370E18A-3FB8-4273-AFB4-0EF5C5B09D4B.mp4)
+![Loope Canyon](69643A0B-6C40-4C00-8D99-6A4BEA35547F.mov)
+![Loope Canyon](D47F81B0-8795-4221-AD47-E605F26584D3.jpg)
+![Loope Canyon](BBD3C817-EC3A-4317-8655-4EF868166678.jpg)
+![Loope Canyon](15782E9F-0DD6-42AE-A472-21D656D33D0B.jpg)
+![Loope Canyon](1CF2EF44-B2D3-454B-B8EE-3B1980B63E2C.jpg)
 
 ## Leviathan Creek
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Kept going down highway 89 a little until reached FS 31052. Got to leviathan creek but couldn’t go any further due to snow/ice
+Kept down Highway 89 a little until FS 31052. I was hoping to ride all the way through to Leviathan. I never saw the creek. About halfway along the trail I had to turn around in the snow and ice.
 
 ![Leviathan Creek](BEBCBE67-916A-40E2-8828-69AA17EA112B.jpg)
 
 ## Highway 4
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Road back highway 89 until I met highway 4. Road down highway 4 but road was close shortly after the silver creek campground
+Rode back on Highway 89 until I met Highway 4. I was hoping to reach Deer Valley Road, 09N83, in the Mokelumne Wilderness and connect back to Highway 88. The road was gated shortly after Silver Creek Campground.
 
 ## Woodfords
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Road back through Markleeville to Woodfords. Tried to find spur trails off highway 88/89 but too much ice and snow. Turned around halfway to Kingwood as conditions were getting worse.
+Rode back through Markleeville to Woodfords and tried spur trails off Highway 88/89 toward Kirkwood. I do not remember the trail number. There was already snow and ice on the trails right beside the road, so going deeper into the mountains was not going to work. Turned around.
 
 ## Echo Lake
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Went down highway 89 and went to echo lake. Goal was to touch the PCT trail. Was successful however I had to have strangers help me push the bike up the small hill up from echo lake. Rear Wheel had no traction going up hill and the hill was iced out.
+Went down Highway 89 to Echo Lake. A friend and I had a goal to step foot on the PCT. I made it, but the hill up from the lake was iced out and the rear wheel had absolutely no grip. I was never in danger of dropping the bike. Random strangers saw me struggle and offered to help push.
 
 ![Echo Lake](3FEC6223-F75C-4B97-8916-0EE542D40B08.jpg)
 ![Echo Lake](3F2676C4-5D00-4A4A-90F2-CD2B60319319.jpg)
-![AHO](AF45423E-8AAF-4AE7-8256-C5C2CACD8D80.jpg)
+![PCT sign at Echo Lake](AF45423E-8AAF-4AE7-8256-C5C2CACD8D80.jpg)
 ![Echo Lake](6D0819C8-4AA3-4D7D-9A6D-A2EC6D4B9596.jpg)
 ![Echo Lake](8E0ECDC3-E7E6-46B4-A8D8-42F37607D5AB.jpg)
 
 ## Angora Ridge
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Road to trail entrance of angora ridge. Trail was closed early for the season (thanks USFS)
+Rode to the trail entrance because the road looked cool on the map. It was closed for the season behind a green gate. Pretty annoyed. Thanks, USFS.
 
 ## Fallen Leaf Lake
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Road to FS1304/Cathedral Road to visit Fallen Leaf Lake
+Wanted one more adventure before the hotel. Took FS 1304, Cathedral Road, down to Fallen Leaf Lake. The lake was quiet and still. I stayed long enough to take a photo.
 
 ![Fallen Leaf Lake](DDBC56F6-CAD0-4F1E-9FFD-DE7AE2CABFB0.jpg)
 ![Fallen Leaf Lake](870198B7-2B72-4521-ABAD-9DE4FCD40C6C.jpg)
@@ -98,9 +98,10 @@ Road to FS1304/Cathedral Road to visit Fallen Leaf Lake
 ## Back to the hotel
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-Headed back to Hotel
+Headed back to Caesars Republic and got in around 4:30. Tired, but not exhausted.
 
 ## The Tiger
+kind: note
 day: Day 1 · Tiger 800 XRX · 170 miles
 
 The Tiger 800 XRX was a surprisingly great bike. It is not top-heavy the way people say, and it felt nimble. Then again my main bike is a Tenere 700, and nothing is as top-heavy as that thing.
@@ -196,6 +197,7 @@ Rode highway 50 back to South Lake Tahoe. Stopped at a boat ramp to take a photo
 ![Sunset from a boat ramp on the way back to South Lake Tahoe](8C9901E7-6E3A-46D3-A1CF-C32BD6AE6875.jpeg)
 
 ## The 500
+kind: note
 day: Day 2 · KTM 500 · 150+ miles
 
 The KTM 500 was a weapon. An absolute monster off-road. There is no way I would have made it up those hills of ice and snow on a heavier bike, given how many times I had to ride off the trail to get around them.

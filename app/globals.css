@@ -68,7 +68,3 @@ dialog.lightbox::backdrop {
   background: rgb(18 14 10 / 0.86);
 }
 
-.moment {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 520px;
-}

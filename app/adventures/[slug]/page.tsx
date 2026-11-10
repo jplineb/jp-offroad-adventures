@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { RideMap } from "@/components/ride-map";
 import { Timeline } from "@/components/timeline";
 import { getAdventure, listAdventures } from "@/lib/adventures";
-import { formatAltitude, formatCaptureDate, formatCapturedAt, STOP_COLORS } from "@/lib/geo-format";
+import { formatCaptureDate, STOP_COLORS } from "@/lib/geo-format";
 import { photoStops } from "@/lib/photo-stops";
 
 type AdventurePageProps = {
@@ -99,32 +99,9 @@ export default async function AdventurePage({ params }: AdventurePageProps) {
             </ul>
           </div>
           <RideMap stops={stops} dates={dates} />
-          <ol className="mt-3 flex flex-wrap gap-2">
-            {stops.map((stop) => {
-              const when = formatCapturedAt(stop.takenAt);
-              const elevation = formatAltitude(stop.altitudeMeters);
-              return (
-                <li key={stop.id}>
-                  <a
-                    href={`#${stop.momentId}`}
-                    className="inline-flex items-baseline gap-2 border border-line bg-card px-2.5 py-1.5 text-sm hover:border-blaze"
-                  >
-                    <span className="font-display text-blaze tabular-nums">
-                      {String(stop.sequence).padStart(2, "0")}
-                    </span>
-                    <span>{stop.title}</span>
-                    {when ? <span className="text-xs text-ink-soft">{when.split(" · ")[1]}</span> : null}
-                    {elevation ? <span className="text-xs text-ink-soft">{elevation}</span> : null}
-                  </a>
-                </li>
-              );
-            })}
-          </ol>
         </section>
       ) : null}
-      <div className="mt-12 max-w-3xl">
-        <Timeline moments={adventure.moments} />
-      </div>
+      <Timeline moments={adventure.moments} />
     </main>
   );
 }

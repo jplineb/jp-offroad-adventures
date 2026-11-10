@@ -138,6 +138,7 @@ function parseMoments(body: string, slug: string, filePath: string): Moment[] {
     const lines = chunk.split("\n");
     const title = lines[0].replace(/^##\s+/, "").trim();
     let day = "";
+    let kind: Moment["kind"] = "stop";
     const prose: string[] = [];
     const media: GalleryItem[] = [];
 
@@ -146,6 +147,14 @@ function parseMoments(body: string, slug: string, filePath: string): Moment[] {
       if (dayMatch) {
         day = dayMatch[1].trim();
         continue;
+      }
+      const kindMatch = /^kind:\s*(stop|note)$/.exec(line.trim());
+      if (kindMatch) {
+        kind = kindMatch[1] === "note" ? "note" : "stop";
+        continue;
+      }
+      if (/^kind:/.test(line.trim())) {
+        throw new Error(`${filePath}: kind must be stop or note`);
       }
       const mediaMatch = /^!\[([^\]]*)\]\(([^)]+)\)$/.exec(line.trim());
       if (mediaMatch) {
@@ -160,6 +169,7 @@ function parseMoments(body: string, slug: string, filePath: string): Moment[] {
       day,
       title,
       text: prose.join("\n").trim(),
+      kind,
       media,
     };
   });
