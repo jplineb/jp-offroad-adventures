@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { formatAltitude, formatCapturedAt, stopColor } from "@/lib/geo-format";
+import { stopColor } from "@/lib/geo-format";
 import type { MapStop } from "@/lib/types";
 import "leaflet/dist/leaflet.css";
 
@@ -45,20 +45,19 @@ export function RideMap({ stops, dates }: RideMapProps) {
       leaflet.polyline(positions, { color: "#1b332b", weight: 3, opacity: 0.8 }).addTo(map);
 
       for (const stop of stops) {
-        const color = stopColor(stop.takenAt, dates);
-        const icon = leaflet.divIcon({
-          className: "ride-pin",
-          html: `<span style="display:grid;place-items:center;width:1.75rem;height:1.75rem;border-radius:999px;background:${color};color:#f3ead9;border:2px solid #fbf6ec;font:600 11px/1 Barlow,sans-serif">${stop.sequence}</span>`,
-          iconSize: [28, 28],
-          iconAnchor: [14, 14],
+        const marker = leaflet.marker([stop.lat, stop.lng], {
+          icon: pinIcon(leaflet, String(stop.sequence), stopColor(stop.takenAt, dates), 28),
+          alt: `${stop.sequence}. ${stop.title}`,
+          zIndexOffset: stop.sequence,
         });
-        leaflet
-          .marker([stop.lat, stop.lng], { icon, alt: `${stop.sequence}. ${stop.title}` })
-          .addTo(map)
-          .bindPopup(popupHtml(stop), { maxWidth: 240 });
+        marker.on("click", () => {
+          window.location.hash = stop.momentId;
+          window.dispatchEvent(new HashChangeEvent("hashchange"));
+        });
+        marker.addTo(map);
       }
 
-      map.fitBounds(positions, { padding: [28, 28], maxZoom: 13 });
+      map.fitBounds(positions, { padding: [36, 36], maxZoom: 13 });
     };
 
     void mount();
@@ -79,28 +78,17 @@ export function RideMap({ stops, dates }: RideMapProps) {
   );
 }
 
-function popupHtml(stop: MapStop): string {
-  const when = formatCapturedAt(stop.takenAt);
-  const elevation = formatAltitude(stop.altitudeMeters);
-  const details = [when, elevation, stop.photoCount > 1 ? `${stop.photoCount} photos` : null]
-    .filter((line): line is string => Boolean(line))
-    .map((line) => `<p style="margin:0.15rem 0 0;color:#5e5348">${escapeHtml(line)}</p>`)
-    .join("");
-
-  return `<a href="#${escapeAttribute(stop.momentId)}" style="display:block;color:#1c1712;text-decoration:none">
-    <img src="${escapeAttribute(stop.coverSrc)}" alt="${escapeAttribute(stop.coverAlt)}" style="display:block;width:100%;height:7.5rem;object-fit:cover" />
-    <p style="margin:0.45rem 0 0;font-family:Georgia,serif;font-size:1.05rem">${escapeHtml(stop.title)}</p>
-    ${details}
-  </a>`;
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
-
-function escapeAttribute(value: string): string {
-  return escapeHtml(value).replaceAll('"', "&quot;");
+function pinIcon(
+  leaflet: typeof import("leaflet"),
+  label: string,
+  color: string,
+  size: number,
+): import("leaflet").DivIcon {
+  const font = size >= 34 ? 13 : size >= 26 ? 11 : 9;
+  return leaflet.divIcon({
+    className: "ride-pin",
+    html: `<span style="display:grid;place-items:center;width:${size}px;height:${size}px;border-radius:999px;background:${color};color:#f3ead9;border:2px solid #fbf6ec;font:600 ${font}px/1 Barlow,sans-serif">${label}</span>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+  });
 }
