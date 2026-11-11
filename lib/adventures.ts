@@ -196,7 +196,16 @@ function resolveMedia(
   const extension = path.extname(filename).toLowerCase();
   const src = `/adventures/${slug}/${filename}`;
   if (VIDEO_EXTENSIONS.has(extension)) {
-    return { kind: "video", src, alt, width: 0, height: 0, location: null };
+    const poster = readPoster(slug, filename);
+    return {
+      kind: "video",
+      src,
+      alt,
+      width: poster?.width ?? 0,
+      height: poster?.height ?? 0,
+      location: placedLocation(placed, filePath),
+      poster: poster?.src ?? null,
+    };
   }
   if (!IMAGE_EXTENSIONS.has(extension)) {
     throw new Error(`${filePath}: unsupported media ${filename}`);
@@ -211,7 +220,21 @@ function resolveMedia(
     width: size.width,
     height: size.height,
     location: placedLocation(placed, filePath) ?? readJpegLocation(bytes),
+    poster: null,
   };
+}
+
+function readPoster(
+  slug: string,
+  filename: string,
+): { src: string; width: number; height: number } | null {
+  const posterName = `${path.basename(filename, path.extname(filename))}-poster.jpg`;
+  const absolute = path.join(PUBLIC_ROOT, slug, posterName);
+  if (!fs.existsSync(absolute)) {
+    return null;
+  }
+  const size = readJpegSize(fs.readFileSync(absolute));
+  return { src: `/adventures/${slug}/${posterName}`, width: size.width, height: size.height };
 }
 
 function placedLocation(value: string | undefined, filePath: string): GeoPoint | null {

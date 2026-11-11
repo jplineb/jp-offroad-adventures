@@ -135,7 +135,7 @@ day: Day 2 · KTM 500 · 150+ miles
 
 Ice and snow started being the dominant surface after a few miles in. Had to fight the uphills to get traction. Took a long time to get around some sections as I had to take the bike off the trail and into the deeper snow to avoid the ice
 
-![Ice and snow on the Genoa Peak climb](D70F95BA-033E-4B6B-9669-AE67C8D1740E.mp4)
+![Ice and snow on the Genoa Peak climb](D70F95BA-033E-4B6B-9669-AE67C8D1740E.mp4) @ 39.04349, -119.8868
 
 ## Top of Genoa Peak
 day: Day 2 · KTM 500 · 150+ miles

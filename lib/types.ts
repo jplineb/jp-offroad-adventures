@@ -12,6 +12,7 @@ export type GalleryItem = {
   width: number;
   height: number;
   location: GeoPoint | null;
+  poster: string | null;
 };
 
 export type MapStop = {

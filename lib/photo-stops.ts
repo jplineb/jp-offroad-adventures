@@ -8,7 +8,7 @@ export function photoStops(moments: Moment[]): MapStop[] {
   for (const moment of moments) {
     const clusters: GalleryItem[][] = [];
     for (const item of moment.media) {
-      if (item.kind !== "image" || !item.location) {
+      if (!item.location) {
         continue;
       }
       const cluster = clusters.find((candidate) => {
@@ -51,7 +51,7 @@ export function photoStops(moments: Moment[]): MapStop[] {
         altitudeMeters: cover.location.altitudeMeters,
         takenAt: cover.location.takenAt,
         photoCount: located.length,
-        coverSrc: cover.src,
+        coverSrc: cover.poster ?? cover.src,
         coverAlt: cover.alt,
       });
     });

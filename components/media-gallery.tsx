@@ -116,6 +116,13 @@ function PhotoButton({
   );
 }
 
+function frameStyle(item: GalleryItem): { aspectRatio: string } | undefined {
+  if (item.width <= 0 || item.height <= 0) {
+    return undefined;
+  }
+  return { aspectRatio: `${item.width} / ${item.height}` };
+}
+
 function VideoFrame({ item }: { item: GalleryItem }) {
   return (
     <figure>
@@ -123,8 +130,10 @@ function VideoFrame({ item }: { item: GalleryItem }) {
         controls
         playsInline
         preload="metadata"
+        poster={item.poster ?? undefined}
         src={item.src}
-        className="aspect-video w-full bg-ink object-contain"
+        className="w-full bg-ink object-contain"
+        style={frameStyle(item)}
       />
       {item.alt ? <figcaption className="mt-2 text-sm text-ink-soft">{item.alt}</figcaption> : null}
     </figure>

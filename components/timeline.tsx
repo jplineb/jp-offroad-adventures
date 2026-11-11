@@ -103,7 +103,10 @@ export function Timeline({ moments }: { moments: Moment[] }) {
               }
 
               const open = openId === moment.id;
-              const cover = moment.media.find((item) => item.kind === "image");
+              const cover =
+                moment.media.find((item) => item.kind === "image") ??
+                moment.media.find((item) => item.poster);
+              const coverSrc = cover?.kind === "image" ? cover.src : cover?.poster;
               const photoCount = moment.media.filter((item) => item.kind === "image").length;
               const videoCount = moment.media.filter((item) => item.kind === "video").length;
               return (
@@ -136,12 +139,12 @@ export function Timeline({ moments }: { moments: Moment[] }) {
                         </span>
                       )}
                     </span>
-                    {cover && !open ? (
+                    {cover && coverSrc && !open ? (
                       <Image
-                        src={cover.src}
+                        src={coverSrc}
                         alt=""
-                        width={cover.width}
-                        height={cover.height}
+                        width={cover.width || 96}
+                        height={cover.height || 64}
                         sizes="96px"
                         className="h-16 w-24 shrink-0 object-cover"
                       />

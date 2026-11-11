@@ -35,8 +35,10 @@ export function StoryMedia({ items, priority = false }: { items: GalleryItem[]; 
             controls
             playsInline
             preload="metadata"
+            poster={item.poster ?? undefined}
             src={item.src}
             className="max-h-[78vh] w-full bg-ink object-contain"
+            style={frameStyle(item)}
           />
         </figure>
       ))}
@@ -65,6 +67,13 @@ export function StoryMedia({ items, priority = false }: { items: GalleryItem[]; 
         : null}
     </div>
   );
+}
+
+function frameStyle(item: GalleryItem): { aspectRatio: string } | undefined {
+  if (item.width <= 0 || item.height <= 0) {
+    return undefined;
+  }
+  return { aspectRatio: `${item.width} / ${item.height}` };
 }
 
 function StoryPhoto({
