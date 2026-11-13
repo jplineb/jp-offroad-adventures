@@ -115,7 +115,7 @@ Headed back to Caesars Republic and got in around 4:30. Tired, but not exhausted
 kind: note
 day: Day 1 · Tiger 800 XRX · 170 miles
 
-The Tiger 800 XRX was a surprisingly great bike. It is not top-heavy the way people say, and it felt nimble. Then again my main bike is a Tenere 700, and nothing is as top-heavy as that thing.
+The Tiger 800 XRX was a surprisingly great bike. It is surprisingly nimble for how large it is. It lacks low-end grunt, but it is really playful at higher rpm. Reviewers say this bike is top-heavy. I didn't feel that for a second. My daily adventure bike is a Tenere 700, though, so I could be biased.
 
 I was on tires that are about 20% off-road and 80% street. There was a surprising amount of grip out here. I climbed and did things I would never do back home on our fine gravel and red slick clay. The low seat height and the ergonomics gave me a lot of confidence too.
 
